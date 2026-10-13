@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-brand-50: #eafaf3;
+  --color-brand-100: #cbf2e2;
+  --color-brand-200: #9ce6c8;
+  --color-brand-300: #63d4a8;
+  --color-brand-400: #2fbc87;
+  --color-brand-500: #10a376;
+  --color-brand-600: #0b8a65;
+  --color-brand-700: #086c51;
+  --color-brand-800: #074f3c;
+  --color-brand-900: #053529;
+
+  --color-gold-300: #ffd479;
+  --color-gold-400: #fbbf3c;
+  --color-gold-500: #f0a91f;
+
+  --color-ink-50: #f6f8fb;
+  --color-ink-100: #eef1f6;
+  --color-ink-200: #dfe4ee;
+  --color-ink-300: #c2cad9;
+  --color-ink-400: #8e9ab1;
+  --color-ink-500: #5f6d87;
+  --color-ink-600: #3e4a60;
+  --color-ink-700: #27313f;
+  --color-ink-800: #151d29;
+  --color-ink-900: #0b1220;
+  --color-ink-950: #060b14;
+
+  --shadow-card: 0 1px 2px rgb(11 18 32 / 0.04), 0 12px 32px -18px rgb(11 18 32 / 0.28);
+  --shadow-float: 0 24px 60px -28px rgb(11 18 32 / 0.45);
+}
+
+:root {
+  --surface: #f6f8fb;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eef1f6;
+  --border-soft: #e3e8f0;
+  --text-strong: #0b1220;
+  --text-muted: #5f6d87;
+  color-scheme: light;
+}
+
+.dark {
+  --surface: #060b14;
+  --surface-raised: #0e1622;
+  --surface-sunken: #111c2b;
+  --border-soft: #1d2a3b;
+  --text-strong: #eaf0f8;
+  --text-muted: #90a0b8;
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--surface);
+  color: var(--text-strong);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  border-color: var(--border-soft);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-brand-500) 35%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@utility card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+@utility panel {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+  border-radius: 0.875rem;
+}
+
+@utility muted {
+  color: var(--text-muted);
+}
+
+@utility strong {
+  color: var(--text-strong);
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-brand-500) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.animate-toast {
+  animation: toast-in 0.25s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.animate-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.28), transparent);
+  animation: shimmer 1.4s infinite;
+}
+.dark .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.06), transparent);
+}
+
+.grid-lines {
+  background-image: linear-gradient(to right, color-mix(in oklab, var(--color-brand-500) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-brand-500) 8%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.hero-glow {
+  background: radial-gradient(60% 60% at 20% 10%, color-mix(in oklab, var(--color-brand-500) 26%, transparent), transparent 60%),
+    radial-gradient(50% 50% at 85% 20%, color-mix(in oklab, var(--color-gold-400) 22%, transparent), transparent 60%);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+input[type="range"] {
+  accent-color: var(--color-brand-500);
+}
+
+table.dense td,
+table.dense th {
+  padding: 0.6rem 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
